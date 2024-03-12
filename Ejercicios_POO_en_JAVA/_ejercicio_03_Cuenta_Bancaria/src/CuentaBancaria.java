@@ -10,9 +10,9 @@ class CuentaBancaria {
     public void depositar(double cantidad) {
         if (cantidad > 0) {
             balance += cantidad;
-            System.out.println("Depósito de $" + cantidad + " realizado.");
+            System.out.println("deposito completado");
         } else {
-            System.out.println("No es posible depositar una cantidad negativa.");
+            System.out.println("no te pases");
         }
     }
 
@@ -20,12 +20,12 @@ class CuentaBancaria {
         if (cantidad > 0) {
             if (cantidad <= balance) {
                 balance -= cantidad;
-                System.out.println("Retiro de $" + cantidad + " realizado.");
+                System.out.println("retiro realizado.");
             } else {
-                System.out.println("No es posible retirar $" + cantidad + ". Fondos insuficientes.");
+                System.out.println("no te pases");
             }
         } else {
-            System.out.println("No es posible retirar una cantidad negativa.");
+            System.out.println("no te pases.");
         }
     }
 
