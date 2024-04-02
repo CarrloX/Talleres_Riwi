@@ -1,15 +1,9 @@
 package controller;
 
-import database.ConfigDB;
 import entity.Paciente;
 import model.PacienteModel;
-
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PacienteController {
@@ -20,7 +14,7 @@ public class PacienteController {
         this.pacienteModel = new PacienteModel();
     }
 
-    public boolean createPaciente(String nombre, String apellidos, LocalDate fechaNacimiento, String documentoIdentidad){
+    public void create(String nombre, String apellidos, LocalDate fechaNacimiento, String documentoIdentidad){
         Paciente paciente = new Paciente();
         paciente.setNombre(nombre);
         paciente.setApellidos(apellidos);
@@ -29,13 +23,37 @@ public class PacienteController {
 
         if (pacienteModel.create(paciente)) {
             JOptionPane.showMessageDialog(null, "paciente agregado correctamente");
-            return true;
         } else {
             JOptionPane.showMessageDialog(null, "error");
-            return false;
         }
     }
     public List<Object> read() {
         return pacienteModel.read();
+    }
+
+    public void update() {
+
+        int idPacienteToUpdate = Integer.parseInt(JOptionPane.showInputDialog("ingrese el ID del paciente para actualizar:"));
+        String nombreNuevo = JOptionPane.showInputDialog("ingresa el nuevo nombre del paciente:");
+        String apellidoNuevo = JOptionPane.showInputDialog("ingresa el nuevo apellido del paciente:");
+        String fechaNacimientoNuevo = JOptionPane.showInputDialog("ingresa la nueva fecha de nacimiento");
+        String documentoIdentidadNuevo = JOptionPane.showInputDialog("ingresa el nuevo documento de identidad:");
+
+
+        Paciente pacienteToUpdate = new Paciente(idPacienteToUpdate, nombreNuevo,apellidoNuevo,LocalDate.parse(fechaNacimientoNuevo) ,documentoIdentidadNuevo);
+
+        if (pacienteModel.update(pacienteToUpdate)) {
+            JOptionPane.showMessageDialog(null, "información del paciente actualizada");
+        } else {
+            JOptionPane.showMessageDialog(null, "error al actualizar el paciente");
+        }
+    }
+
+    public void delete(int idPaciente) {
+        if (pacienteModel.delete(idPaciente)) {
+            JOptionPane.showMessageDialog(null, "paciente eliminado exitosamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "error al eliminar el paciente");
+        }
     }
 }

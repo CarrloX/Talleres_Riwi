@@ -9,13 +9,15 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         PacienteController objPacienteController = new PacienteController();
-        String option = "";
+        String option;
         do {
             option = JOptionPane.showInputDialog("""
                 MENU
                 1. Crear paciente
                 2. Listar pacientes
-                3. Salir
+                3. Actualizar pacientes
+                4. Eliminar pacientes
+                5. Salir
                 """);
             switch (option) {
                 case "1":
@@ -25,7 +27,7 @@ public class Main {
                     String documentoIdentidad = JOptionPane.showInputDialog("ingresa el documento de identidad del paciente");
                     try {
                         LocalDate fechaNacimiento=LocalDate.parse(fechaNacimientoStr);
-                        objPacienteController.createPaciente(nombrePaciente, apellidosPaciente, fechaNacimiento, documentoIdentidad);
+                        objPacienteController.create(nombrePaciente, apellidosPaciente, fechaNacimiento, documentoIdentidad);
                     } catch (DateTimeParseException e) {
                         JOptionPane.showMessageDialog(null, "formato de fecha incorrecto. utiliza el formato YYYY-MM-DD y con guiones incluidos >:v");
                     }
@@ -34,19 +36,25 @@ public class Main {
                     List<Object> pacientes= objPacienteController.read();
                     StringBuilder message = new StringBuilder("lista de pacientes:\n");
                     for(Object pacienteObj : pacientes){
-                        if (pacienteObj instanceof Paciente){
-                            Paciente paciente = (Paciente) pacienteObj;
+                        if (pacienteObj instanceof Paciente paciente){
                             message.append("ID: ").append(paciente.getIdPaciente()).
                                     append(", Nombre: ").append(paciente.getNombre()).
                                     append(", Apellido: ").append(paciente.getApellidos()).
-                                    append(", Fecha de Nacimiento").append(paciente.getFechaNacimiento()).
-                                    append(", Documento de Identidad").append(paciente.getDocumentoIdentidad()).
+                                    append(", Fecha de Nacimiento ").append(paciente.getFechaNacimiento()).
+                                    append(", Documento de Identidad ").append(paciente.getDocumentoIdentidad()).
                                     append("\n");
                         }
                     }
                     JOptionPane.showMessageDialog(null,message.toString());
                     break;
+                case "3":
+                    objPacienteController.update();
+                    break;
+                case "4":
+                    int idPacienteToDelete = Integer.parseInt(JOptionPane.showInputDialog("ingresa el ID del autor para eliminar:"));
+                    objPacienteController.delete(idPacienteToDelete);
+                    break;
             }
-        } while (!option.equals("3"));
+        } while (!option.equals("5"));
     }
 }

@@ -3,12 +3,12 @@ package database;
 import java.util.List;
 
 public interface CRUD {
-    public boolean create(Object object);
+    boolean create(Object object);
 
-    public List<Object> read();
+    List<Object> read();
 
-    public boolean update(Object object);
+    boolean update(Object object);
 
-    public boolean delete(Object object);
+    boolean delete(int object);
 
 }

@@ -12,8 +12,7 @@ public class Medico {
     public Medico(){
     }
 
-    public Medico(int idMedico, String nombre, String apellidos, int idEspecialidad) {
-        this.idMedico = idMedico;
+    public Medico(String nombre, String apellidos, int idEspecialidad) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.idEspecialidad = idEspecialidad;
