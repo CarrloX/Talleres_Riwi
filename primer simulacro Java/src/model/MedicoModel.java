@@ -126,7 +126,7 @@ public class MedicoModel implements CRUD {
                 isDeleted = true;
             }
         } catch (SQLException e) {
-            JOptionPane.showInputDialog(null,"error al eliminar el medico: "+e.getMessage());
+            JOptionPane.showMessageDialog(null,"error al eliminar el medico: "+e.getMessage());
         } finally {
             ConfigDB.closedConnection();
         }
