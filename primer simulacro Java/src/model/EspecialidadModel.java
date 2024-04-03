@@ -2,7 +2,7 @@ package model;
 
 import database.CRUD;
 import database.ConfigDB;
-import entity.Medico;
+import entity.Especialidad;
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,35 +11,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicoModel implements CRUD {
+public class EspecialidadModel implements CRUD {
 
     public boolean create(Object object) {
         Connection objConnection = null;
         boolean isCreated = false;
 
-        Medico objMedico = (Medico) object;
+        Especialidad objEspecialidad = (Especialidad) object;
 
         try{
             objConnection = ConfigDB.openConnection();
 
-            String sql = "INSERT INTO medico(nombre,apellido, id_especialidad) VALUES (?,?,?)";
+            String sql = "INSERT INTO especialidad(nombre,descripcion, id_especialidad) VALUES (?,?,?)";
             PreparedStatement objPrepare = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 
-            objPrepare.setString(1,objMedico.getNombre());
-            objPrepare.setString(2,objMedico.getApellidos());
-            objPrepare.setInt(3, objMedico.getIdEspecialidad());
+            objPrepare.setString(1,objEspecialidad.getNombre());
+            objPrepare.setString(2,objEspecialidad.getDescricion());
+            objPrepare.setInt(3, objEspecialidad.getIdEspecialidad());
 
             objPrepare.executeUpdate();
 
             ResultSet objResult = objPrepare.getGeneratedKeys();
             if (objResult.next()){
-                objMedico.setIdMedico(objResult.getInt(1));
+                objEspecialidad.setIdEspecialidad(objResult.getInt(1));
                 isCreated = true;
             }
 
             objPrepare.close();
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null,"error al agregar el medico"+e.getMessage());
+            JOptionPane.showMessageDialog(null,"error al agregar la especialidad"+e.getMessage());
         }finally {
             if (objConnection !=null){
                 ConfigDB.closedConnection();
@@ -51,31 +51,28 @@ public class MedicoModel implements CRUD {
     @Override
     public List<Object> read() {
         Connection objConnection = ConfigDB.openConnection();
-        List<Object> medicos = new ArrayList<>();
+        List<Object> especialidades = new ArrayList<>();
 
         try{
-            String sql="SELECT * FROM medico;";
+            String sql="SELECT * FROM especialidad;";
 
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
             ResultSet objResult = objPrepare.executeQuery();
 
             while (objResult.next()) {
-                String nombre = objResult.getString("nombre");
-                String apellidos = objResult.getString("apellido");
                 int idEspecialidad = objResult.getInt("id_especialidad");
-                int id = objResult.getInt("id_medico");
-                // toca crear un nuevo objeto Medico con los argumentos especificos
-                Medico medico = new Medico(nombre, apellidos, idEspecialidad);
-                medico.setIdMedico(id);
-                medicos.add(medico);
+                String nombre = objResult.getString("nombre");
+                String descripcion = objResult.getString("descripcion");
+                Especialidad especialidad = new Especialidad(idEspecialidad,nombre,descripcion);
+                especialidades.add(especialidad);
             }
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e.getMessage());
         }finally {
             ConfigDB.closedConnection();
         }
-        return medicos;
+        return especialidades;
     }
 
     @Override
@@ -84,18 +81,17 @@ public class MedicoModel implements CRUD {
 
         Connection objConnection = ConfigDB.openConnection();
 
-        Medico objMedico = (Medico) object;
+        Especialidad objEspecialidad = (Especialidad) object;
 
         try {
 
-            String sql = "UPDATE medico SET nombre = ?, apellido = ?, id_especialidad=?  WHERE id_medico = ? " ;
+            String sql = "UPDATE especialidad SET nombre = ?, descripcion = ? WHERE id_especialidad = ? " ;
 
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
-            objPrepare.setString(1,objMedico.getNombre());
-            objPrepare.setString(2,objMedico.getApellidos());
-            objPrepare.setInt(3,objMedico.getIdEspecialidad());
-            objPrepare.setInt(4,objMedico.getIdMedico());
+            objPrepare.setString(1,objEspecialidad.getNombre());
+            objPrepare.setString(2,objEspecialidad.getDescricion());
+            objPrepare.setInt(3,objEspecialidad.getIdEspecialidad());
 
             int rowAffected = objPrepare.executeUpdate();
 
@@ -103,7 +99,7 @@ public class MedicoModel implements CRUD {
                 isUpdated = true;
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "error al actualizar el medico: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "error al actualizar la especialidad: " + e.getMessage());
         } finally {
             ConfigDB.closedConnection();
         }
@@ -112,17 +108,17 @@ public class MedicoModel implements CRUD {
     }
 
     @Override
-    public boolean delete(int idMedico) {
+    public boolean delete(int idEspecialidad) {
         boolean isDeleted = false;
 
         Connection objConnection = ConfigDB.openConnection();
 
         try {
-            String sql = "DELETE FROM medico WHERE id_medico = ?";
+            String sql = "DELETE FROM especialidad WHERE id_especialidad = ?";
 
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
-            objPrepare.setInt(1, idMedico);
+            objPrepare.setInt(1, idEspecialidad);
 
             int rowAffected = objPrepare.executeUpdate();
 
@@ -130,7 +126,7 @@ public class MedicoModel implements CRUD {
                 isDeleted = true;
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"error al eliminar el medico: "+e.getMessage());
+            JOptionPane.showMessageDialog(null,"error al eliminar la especialidad: "+e.getMessage());
         } finally {
             ConfigDB.closedConnection();
         }

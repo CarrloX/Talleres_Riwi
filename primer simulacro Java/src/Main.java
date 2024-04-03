@@ -1,5 +1,7 @@
+import controller.EspecialidadController;
 import controller.MedicoController;
 import controller.PacienteController;
+import entity.Especialidad;
 import entity.Medico;
 import entity.Paciente;
 
@@ -12,13 +14,15 @@ public class Main {
     public static void main(String[] args) {
         PacienteController objPacienteController = new PacienteController();
         MedicoController objMedicoController = new MedicoController();
+        EspecialidadController objEspecialidadController = new EspecialidadController();
         String menuPrincipal;
         do {
             menuPrincipal = JOptionPane.showInputDialog("""
                     MENU PRINCIPAL
                     1. Administrar Pacientes
                     2. Administrar Medicos
-                    3. Salir
+                    3. Administrar Especialidades
+                    4. Salir
                     """);
             switch (menuPrincipal) {
                 case "1":
@@ -94,8 +98,8 @@ public class Main {
                                                 append(", ID_Especialidad").append(medico.getIdEspecialidad()).
                                                 append("\n");
                                     }
-                                    JOptionPane.showMessageDialog(null, message.toString());
                                 }
+                                JOptionPane.showMessageDialog(null, message.toString());
                                 break;
                             case "3":
                                 objMedicoController.update();
@@ -107,7 +111,48 @@ public class Main {
                         }
                     } while (!medicoOpcion.equals("5"));
                     break;
+                case "3":
+                    String especialidadOpcion;
+                    do {
+                        especialidadOpcion = JOptionPane.showInputDialog("""
+                                ESPECIALIDAD MENU:
+                                1. Crear especialidad
+                                2. Listar especialidad
+                                3. Actualizar especialidad
+                                4. Eliminar especialidad
+                                5. Volver al menu principal
+                                """);
+                        switch (especialidadOpcion){
+                            case "1":
+                                int idEspecialidad = Integer.parseInt(JOptionPane.showInputDialog("ingresa el ID de la especialidad"));
+                                String nombreEspecialidad = JOptionPane.showInputDialog("ingresa el nombre de la especialidad");
+                                String descripcionEspecialidad = JOptionPane.showInputDialog("ingresa la descripcion de la especialidad");
+                                objEspecialidadController.create( idEspecialidad,nombreEspecialidad, descripcionEspecialidad);
+                                break;
+                            case "2":
+                                List<Object> especialidades = objEspecialidadController.read();
+                                StringBuilder message = new StringBuilder("lista de especialidades:\n");
+                                for (Object especialidadObj : especialidades) {
+                                    if (especialidadObj instanceof Especialidad especialidad) {
+                                        message.append("ID: ").append(especialidad.getIdEspecialidad()).
+                                                append(", Nombre: ").append(especialidad.getNombre()).
+                                                append(", Descripcion: ").append(especialidad.getDescricion()).
+                                                append("\n");
+                                    }
+                                }
+                                JOptionPane.showMessageDialog(null, message.toString());
+                                break;
+                            case "3":
+                                objEspecialidadController.update();
+                                break;
+                            case "4":
+                                int idEspecialidadToDelete = Integer.parseInt(JOptionPane.showInputDialog("ingresa el ID del medico para eliminar:"));
+                                objEspecialidadController.delete(idEspecialidadToDelete);
+                                break;
+                        }
+                    } while (!especialidadOpcion.equals("5"));
+                    break;
             }
-        } while (!menuPrincipal.equals("3"));
+        } while (!menuPrincipal.equals("4"));
     }
 }

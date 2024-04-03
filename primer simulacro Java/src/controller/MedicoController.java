@@ -2,7 +2,6 @@ package controller;
 
 import entity.Medico;
 import model.MedicoModel;
-
 import javax.swing.*;
 import java.util.List;
 
@@ -13,10 +12,10 @@ public class MedicoController {
         this.medicoModel = new MedicoModel();
     }
 
-    public void create(String nombre, String apellidos, int idEspecialidad){
+    public void create(String nombre, String Apellidos, int idEspecialidad){
         Medico medico = new Medico();
         medico.setNombre(nombre);
-        medico.setApellidos(apellidos);
+        medico.setApellidos(Apellidos);
         medico.setIdEspecialidad(idEspecialidad);
 
         if (medicoModel.create(medico)) {
