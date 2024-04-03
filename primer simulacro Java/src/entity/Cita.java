@@ -25,6 +25,9 @@ public class Cita {
         Motivo = motivo;
     }
 
+    public Cita(){
+    }
+
     public int getIdCita() {
         return idCita;
     }

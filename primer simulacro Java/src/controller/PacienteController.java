@@ -2,6 +2,7 @@ package controller;
 
 import entity.Paciente;
 import model.PacienteModel;
+
 import javax.swing.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -10,11 +11,11 @@ public class PacienteController {
 
     PacienteModel pacienteModel;
 
-    public PacienteController(){
+    public PacienteController() {
         this.pacienteModel = new PacienteModel();
     }
 
-    public void create(String nombre, String apellidos, LocalDate fechaNacimiento, String documentoIdentidad){
+    public void create(String nombre, String apellidos, LocalDate fechaNacimiento, String documentoIdentidad) {
         Paciente paciente = new Paciente();
         paciente.setNombre(nombre);
         paciente.setApellidos(apellidos);
@@ -27,6 +28,7 @@ public class PacienteController {
             JOptionPane.showMessageDialog(null, "error");
         }
     }
+
     public List<Object> read() {
         return pacienteModel.read();
     }
@@ -40,7 +42,7 @@ public class PacienteController {
         String documentoIdentidadNuevo = JOptionPane.showInputDialog("ingresa el nuevo documento de identidad:");
 
 
-        Paciente pacienteToUpdate = new Paciente(idPacienteToUpdate, nombreNuevo,apellidoNuevo,LocalDate.parse(fechaNacimientoNuevo) ,documentoIdentidadNuevo);
+        Paciente pacienteToUpdate = new Paciente(idPacienteToUpdate, nombreNuevo, apellidoNuevo, LocalDate.parse(fechaNacimientoNuevo), documentoIdentidadNuevo);
 
         if (pacienteModel.update(pacienteToUpdate)) {
             JOptionPane.showMessageDialog(null, "información del paciente actualizada");
