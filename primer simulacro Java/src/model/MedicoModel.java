@@ -22,11 +22,12 @@ public class MedicoModel implements CRUD {
         try{
             objConnection = ConfigDB.openConnection();
 
-            String sql = "INSERT INTO medico(nombre,apellido) VALUES (?,?)";
+            String sql = "INSERT INTO medico(nombre,apellido, id_especialidad) VALUES (?,?,?)";
             PreparedStatement objPrepare = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 
             objPrepare.setString(1,objMedico.getNombre());
             objPrepare.setString(2,objMedico.getApellidos());
+            objPrepare.setInt(3, objMedico.getIdEspecialidad());
 
             objPrepare.executeUpdate();
 
@@ -59,11 +60,12 @@ public class MedicoModel implements CRUD {
 
             ResultSet objResult = objPrepare.executeQuery();
 
-            while (objResult.next()){
-                int idEspecialidad = objResult.getInt("id_especialidad");
+            while (objResult.next()) {
                 String nombre = objResult.getString("nombre");
                 String apellidos = objResult.getString("apellido");
-                Medico medico = new Medico(idEspecialidad,nombre,apellidos);
+                int idEspecialidad = objResult.getInt("id_especialidad");
+                // toca crear un nuevo objeto Medico con los argumentos especificos
+                Medico medico = new Medico(nombre, apellidos, idEspecialidad);
                 medicos.add(medico);
             }
         }catch (Exception e){
@@ -106,7 +108,7 @@ public class MedicoModel implements CRUD {
     }
 
     @Override
-    public boolean delete(int object) {
+    public boolean delete(int idMedico) {
         boolean isDeleted = false;
 
         Connection objConnection = ConfigDB.openConnection();
@@ -116,7 +118,7 @@ public class MedicoModel implements CRUD {
 
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
-            objPrepare.setInt(1, object);
+            objPrepare.setInt(1, idMedico);
 
             int rowAffected = objPrepare.executeUpdate();
 
@@ -124,7 +126,7 @@ public class MedicoModel implements CRUD {
                 isDeleted = true;
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "error al eliminar el medico: " + e.getMessage());
+            JOptionPane.showInputDialog(null,"error al eliminar el medico: "+e.getMessage());
         } finally {
             ConfigDB.closedConnection();
         }
