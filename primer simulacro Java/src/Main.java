@@ -190,11 +190,14 @@ public class Main {
                                 StringBuilder message = new StringBuilder("lista de citas:\n");
                                 for (Object citaObj : citas) {
                                     if (citaObj instanceof Cita cita) {
-                                        message.append("ID de la cita: ").append(cita.getIdCita()).
-                                                append("Fecha de la Cita: ").append(cita.getFecha()).
-                                                append(", Hora de la Cita: ").append(cita.getHora()).
+                                        message.append("ID de la cita: ").append(cita.getIdCita()).append(" ").
+                                                append("Paciente: ").append(cita.getPaciente().getNombre() + (" ")).
+                                                append("Medico: ").append(cita.getMedico().getNombre()).
+                                                append(cita.getMedico().getApellidos()+(" ")).
+                                                append("Fecha de la Cita: ").append(cita.getFecha() + (" ")).
+                                                append(", Hora de la Cita: ").append(cita.getHora() + (" ")).
                                                 append(", Motivo: ").append(cita.getMotivo()).
-                                                append("\n");
+                                                append("\n ");
                                     }
                                 }
                                 JOptionPane.showMessageDialog(null, message.toString());

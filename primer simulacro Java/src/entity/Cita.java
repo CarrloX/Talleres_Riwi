@@ -16,6 +16,10 @@ public class Cita {
 
     private String motivo;
 
+    private Medico medico;
+
+    private Paciente paciente;
+
     public Cita(int idCita, int idPaciente, int idMedico, LocalDate fecha, LocalTime hora, String motivo) {
         this.idCita = idCita;
         this.idPaciente = idPaciente;
@@ -82,6 +86,23 @@ public class Cita {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
     @Override

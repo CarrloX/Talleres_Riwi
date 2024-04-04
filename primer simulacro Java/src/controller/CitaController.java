@@ -3,7 +3,6 @@ package controller;
 import entity.Cita;
 import model.CitaModel;
 import javax.swing.*;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
