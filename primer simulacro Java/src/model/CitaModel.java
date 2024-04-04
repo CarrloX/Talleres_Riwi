@@ -6,6 +6,7 @@ import entity.Cita;
 import javax.swing.*;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,14 @@ public class CitaModel implements CRUD {
         try{
             objConnection = ConfigDB.openConnection();
 
-            String sql = "INSERT INTO cita(fecha_cita,hora_cita,id_medico,id_paciente,motivo,id_cita) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO cita(fecha_cita,hora_cita,id_medico,id_paciente,motivo) VALUES (?,?,?,?,?)";
             PreparedStatement objPrepare = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 
             objPrepare.setObject(1,objCita.getFecha());
-            objPrepare.setTime(2,objCita.getHora());
+            objPrepare.setObject(2, objCita.getHora());
             objPrepare.setInt(3,objCita.getIdMedico());
             objPrepare.setInt(4,objCita.getIdPaciente());
             objPrepare.setString(5,objCita.getMotivo());
-            objPrepare.setInt(6,objCita.getIdCita());
 
             objPrepare.executeUpdate();
 
@@ -72,7 +72,7 @@ public class CitaModel implements CRUD {
                 LocalTime horaCita = horaCitasql.toLocalTime();
                 String motivo = objResult.getString("motivo");
                 Cita cita = new Cita(idCita,idMedico,idPaciente,fechaCita,horaCita,motivo);
-                citas.add(citas);
+                citas.add(cita);
             }
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e.getMessage());
@@ -96,9 +96,10 @@ public class CitaModel implements CRUD {
 
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
-            objPrepare.setDate(1, (Date) objCita.getFecha());
-            objPrepare.setTime(2,objCita.getHora());
+            objPrepare.setDate(1,java.sql.Date.valueOf(objCita.getFecha()));
+            objPrepare.setTime(2,java.sql.Time.valueOf(objCita.getHora()));
             objPrepare.setString(3,objCita.getMotivo());
+            objPrepare.setInt(4,objCita.getIdCita());
 
             int rowAffected = objPrepare.executeUpdate();
 

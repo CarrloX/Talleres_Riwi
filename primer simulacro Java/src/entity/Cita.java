@@ -1,7 +1,7 @@
 package entity;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Cita {
     private int idCita;
@@ -10,20 +10,28 @@ public class Cita {
 
     private int idMedico;
 
-    private Date fecha;
+    private LocalDate fecha;
 
-    private Time hora;
+    private LocalTime hora;
 
-    private String Motivo;
+    private String motivo;
 
-    public Cita(int idCita, int idPaciente, int idMedico, Date fecha, Time hora, String motivo) {
+    public Cita(int idCita, int idPaciente, int idMedico, LocalDate fecha, LocalTime hora, String motivo) {
         this.idCita = idCita;
         this.idPaciente = idPaciente;
         this.idMedico = idMedico;
         this.fecha = fecha;
         this.hora = hora;
-        Motivo = motivo;
+        this.motivo = motivo;
     }
+
+    public Cita(int idCita, LocalDate fecha, LocalTime hora, String motivo) {
+        this.idCita = idCita;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.motivo = motivo;
+    }
+
 
     public Cita(){
     }
@@ -52,28 +60,28 @@ public class Cita {
         this.idMedico = idMedico;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public Time getHora() {
+    public LocalTime getHora() {
         return hora;
     }
 
-    public void setHora(Time hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
 
     public String getMotivo() {
-        return Motivo;
+        return motivo;
     }
 
     public void setMotivo(String motivo) {
-        Motivo = motivo;
+        this.motivo = motivo;
     }
 
     @Override
@@ -84,7 +92,7 @@ public class Cita {
                 ", idMedico=" + idMedico +
                 ", fecha=" + fecha +
                 ", hora=" + hora +
-                ", Motivo='" + Motivo + '\'' +
+                ", motivo='" + motivo + '\'' +
                 '}';
     }
 }

@@ -1,12 +1,15 @@
+import controller.CitaController;
 import controller.EspecialidadController;
 import controller.MedicoController;
 import controller.PacienteController;
+import entity.Cita;
 import entity.Especialidad;
 import entity.Medico;
 import entity.Paciente;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
@@ -15,6 +18,7 @@ public class Main {
         PacienteController objPacienteController = new PacienteController();
         MedicoController objMedicoController = new MedicoController();
         EspecialidadController objEspecialidadController = new EspecialidadController();
+        CitaController objCitaController = new CitaController();
         String menuPrincipal;
         do {
             menuPrincipal = JOptionPane.showInputDialog("""
@@ -22,7 +26,8 @@ public class Main {
                     1. Administrar Pacientes
                     2. Administrar Medicos
                     3. Administrar Especialidades
-                    4. Salir
+                    4. Administrar Citas
+                    5. Salir
                     """);
             switch (menuPrincipal) {
                 case "1":
@@ -152,7 +157,59 @@ public class Main {
                         }
                     } while (!especialidadOpcion.equals("5"));
                     break;
+                case "4":
+                    String citaOpcion;
+                    do {
+                        citaOpcion = JOptionPane.showInputDialog("""
+                                CITAS MENU:
+                                1. Crear cita
+                                2. Listar citas
+                                3. Actualizar citas
+                                4. Eliminar citas
+                                5. Volver al menu principal
+                                """);
+                        switch (citaOpcion){
+                            case "1":
+                                String fechaCitaStr = JOptionPane.showInputDialog("ingresa la fecha de la cita (YYYY-MM-DD)");
+                                String horaCitaStr = JOptionPane.showInputDialog("ingresa la hora de la cita");
+                                String motivo = JOptionPane.showInputDialog("ingresa el motivo de la cita");
+                                String idPacienteStr = JOptionPane.showInputDialog("ingresa el id del paciente al que le deseas asignar la cita");
+                                String idMedicoStr = JOptionPane.showInputDialog("ingresa el id del medico al que le deseas asignar la cita");
+                                try {
+                                    LocalDate fechaCita = LocalDate.parse(fechaCitaStr);
+                                    LocalTime horaCita = LocalTime.parse(horaCitaStr);
+                                    int idPaciente = Integer.parseInt(idPacienteStr);
+                                    int idMedico = Integer.parseInt(idMedicoStr);
+                                    objCitaController.create(fechaCita,horaCita,motivo,idPaciente,idMedico);
+                                } catch (DateTimeParseException e) {
+                                    JOptionPane.showMessageDialog(null, "formato de fecha y/o hora incorrecta. utiliza el formato YYYY-MM-DD y con guiones incluidos >:v");
+                                }
+                                break;
+                            case "2":
+                                List<Object> citas = objCitaController.read();
+                                StringBuilder message = new StringBuilder("lista de citas:\n");
+                                for (Object citaObj : citas) {
+                                    if (citaObj instanceof Cita cita) {
+                                        message.append("ID de la cita: ").append(cita.getIdCita()).
+                                                append("Fecha de la Cita: ").append(cita.getFecha()).
+                                                append(", Hora de la Cita: ").append(cita.getHora()).
+                                                append(", Motivo: ").append(cita.getMotivo()).
+                                                append("\n");
+                                    }
+                                }
+                                JOptionPane.showMessageDialog(null, message.toString());
+                                break;
+                            case "3":
+                                objCitaController.update();
+                                break;
+                            case "4":
+                                int idCitaToDelete = Integer.parseInt(JOptionPane.showInputDialog("ingresa el ID de la cita para eliminar:"));
+                                objCitaController.delete(idCitaToDelete);
+                                break;
+                        }
+                    } while (!citaOpcion.equals("5"));
+                    break;
             }
-        } while (!menuPrincipal.equals("4"));
+        } while (!menuPrincipal.equals("5"));
     }
 }
