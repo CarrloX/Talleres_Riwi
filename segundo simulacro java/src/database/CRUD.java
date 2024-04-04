@@ -3,7 +3,7 @@ package database;
 import java.util.List;
 
 public interface CRUD {
-    boolean create(Object obj);
+    Object create(Object obj);
 
     List<Object> read();
 

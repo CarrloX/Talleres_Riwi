@@ -10,11 +10,11 @@ public class reservacion {
 
     private int id_vuelo;
 
-    private Date fecha_reservacion;
+    private String fecha_reservacion;
 
     private String asiento;
 
-    public reservacion(int id_reservacion, int id_pasajero, int id_vuelo, Date fecha_reservacion, String asiento) {
+    public reservacion(int id_reservacion, int id_pasajero, int id_vuelo, String fecha_reservacion, String asiento) {
         this.id_reservacion = id_reservacion;
         this.id_pasajero = id_pasajero;
         this.id_vuelo = id_vuelo;
@@ -49,11 +49,11 @@ public class reservacion {
         this.id_vuelo = id_vuelo;
     }
 
-    public Date getFecha_reservacion() {
+    public String getFecha_reservacion() {
         return fecha_reservacion;
     }
 
-    public void setFecha_reservacion(Date fecha_reservacion) {
+    public void setFecha_reservacion(String fecha_reservacion) {
         this.fecha_reservacion = fecha_reservacion;
     }
 
