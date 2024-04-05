@@ -16,16 +16,6 @@ public class Reservacion {
 
     private Vuelo vuelo;
 
-    public Reservacion(int id_reservacion, int id_pasajero, int id_vuelo, String fecha_reservacion, String asiento, Pasajero pasajero, Vuelo vuelo) {
-        this.id_reservacion = id_reservacion;
-        this.id_pasajero = id_pasajero;
-        this.id_vuelo = id_vuelo;
-        this.fecha_reservacion = fecha_reservacion;
-        this.asiento = asiento;
-        this.pasajero = pasajero;
-        this.vuelo = vuelo;
-    }
-
     public Reservacion() {
     }
 
@@ -80,12 +70,12 @@ public class Reservacion {
 
     @Override
     public String toString() {
-        return "reservacion{" +
-                "id_reservacion=" + id_reservacion +
-                ", id_pasajero=" + id_pasajero +
-                ", id_vuelo=" + id_vuelo +
-                ", fecha_reservacion=" + fecha_reservacion +
-                ", asiento='" + asiento + '\'' +
+        return
+                "ID de Reserva: " + id_reservacion +
+                " ID de Pasajero: " + id_pasajero +
+                " ID de Vuelo=" + id_vuelo +
+                " Fecha de reserva: " + fecha_reservacion +
+                " Asiento: " + asiento + '\'' +
                 '}';
     }
 }

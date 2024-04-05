@@ -3,6 +3,7 @@ import controller.PasajeroController;
 import controller.ReservacionController;
 import controller.VueloController;
 import entity.Avion;
+import entity.Reservacion;
 import model.PasajeroModel;
 
 import javax.swing.*;
@@ -87,10 +88,13 @@ public class Main {
                                 ReservacionController.create();
                                 break;
                             case 2:
+                                ReservacionController.read();
                                 break;
                             case 3:
+                                ReservacionController.update();
                                 break;
                             case 4:
+                                ReservacionController.delete();
                                 break;
                         }
                     } while (OpcionReservaciones != 5);
