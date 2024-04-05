@@ -6,6 +6,7 @@ import entity.Vuelo;
 
 import javax.swing.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VueloModel implements CRUD {
@@ -42,17 +43,90 @@ public class VueloModel implements CRUD {
     }
 
     @Override
-    public List<Object> read() {
-        return null;
+    public List<Object> read(){
+
+        List<Object> listaVuelos = new ArrayList<>();
+        Connection objConnection = ConfigDB.openConnection();
+
+        try {
+            String sql = "SELECT * FROM vuelo;";
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            ResultSet objResult = objPrepare.executeQuery();
+
+            while (objResult.next()) {
+                Vuelo objVuelo = new Vuelo();
+
+                objVuelo.setId_vuelo(objResult.getInt("id_vuelo"));
+                objVuelo.setDestino(objResult.getString("destino"));
+                objVuelo.setFecha_salida(objResult.getString("fecha_salida"));
+                objVuelo.setHora_salida(objResult.getString("hora_salida"));
+
+                listaVuelos.add(objVuelo);
+            }
+        } catch (SQLException e) {
+            System.out.println("error" + e.getMessage());
+        }
+
+        ConfigDB.closedConnection();
+        return listaVuelos;
     }
 
     @Override
     public boolean update(Object obj) {
-        return false;
+        Connection objConnection = ConfigDB.openConnection();
+        Vuelo objVuelo = (Vuelo) obj;
+
+        boolean isUpdated=false;
+
+        try {
+            String sql = "UPDATE vuelo SET destino = ?, fecha_salida = ? , hora_salida = ? WHERE id_vuelo = ?;";
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            objPrepare.setString(1,objVuelo.getDestino());
+            objPrepare.setString(2, objVuelo.getFecha_salida());
+            objPrepare.setString(3,objVuelo.getHora_salida());
+            objPrepare.setInt(4,objVuelo.getId_vuelo());
+
+            int totalRowAffected = objPrepare.executeUpdate();
+
+            if (totalRowAffected > 0){
+                isUpdated=true;
+                JOptionPane.showMessageDialog(null,"el vuelo fue actualizado correctamente");
+            }
+        }catch (SQLException e){
+            System.out.println("error"+ e.getMessage());
+        }
+        ConfigDB.closedConnection();
+        return isUpdated;
     }
 
     @Override
     public boolean delete(Object obj) {
-        return false;
+        Connection objConnection = ConfigDB.openConnection();
+        Vuelo objVuelo = (Vuelo) obj;
+
+        boolean isDeleted = false;
+
+        try {
+            String sql = "DELETE FROM vuelo  WHERE id_vuelo = ?;";
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            objPrepare.setInt(1, objVuelo.getId_vuelo());
+
+            int totalAffectedRows = objPrepare.executeUpdate();
+
+            if (totalAffectedRows > 0) {
+                isDeleted = true;
+
+                JOptionPane.showMessageDialog(null, "se ha eliminado el vuelo correctamente");
+            }
+        } catch (SQLException e) {
+            System.out.println("error" + e.getMessage());
+        }
+
+        ConfigDB.closedConnection();
+
+        return isDeleted;
     }
 }

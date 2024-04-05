@@ -49,7 +49,7 @@ public class Avion {
     @Override
     public String toString() {
         return
-                "Capacidad: " + capacidad +
-                " Modelo: " + modelo;
+                "Modelo: " + modelo+
+                " Capacidad: " + capacidad;
     }
 }

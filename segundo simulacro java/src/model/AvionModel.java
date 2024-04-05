@@ -80,13 +80,15 @@ public class AvionModel implements CRUD {
         boolean isUpdated=false;
 
         try {
-            String sql = "UPDATE avion SET modelo = ?, capacidad = ?;";
+            String sql = "UPDATE avion SET modelo = ?, capacidad = ? WHERE id_avion=?;";
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
             objPrepare.setString(1,objAvion.getModelo());
             objPrepare.setInt(2,objAvion.getCapacidad());
+            objPrepare.setInt(3,objAvion.getId_avion());
 
             int totalRowAffected = objPrepare.executeUpdate();
+
             if (totalRowAffected > 0){
                 isUpdated=true;
                 JOptionPane.showMessageDialog(null,"el avion fue actualizado correctamente");

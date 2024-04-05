@@ -1,7 +1,5 @@
 package entity;
 
-import java.sql.Time;
-import java.util.Date;
 
 public class Vuelo {
 
@@ -15,12 +13,16 @@ public class Vuelo {
 
     private String hora_salida;
 
-    public Vuelo(int id_vuelo, int id_avion, String destino, String fecha_salida, String hora_salida) {
-        this.id_vuelo = id_vuelo;
+    private Avion avion;
+    //esto es para usar una entidad ajena en un controlador distinto
+
+
+    public Vuelo(String destino, String fecha_salida, String hora_salida, int id_avion,Avion avion) {
         this.id_avion = id_avion;
         this.destino = destino;
         this.fecha_salida = fecha_salida;
         this.hora_salida = hora_salida;
+        this.avion = avion;
     }
 
     public Vuelo() {
@@ -68,12 +70,11 @@ public class Vuelo {
 
     @Override
     public String toString() {
-        return "vuelo{" +
-                "id_vuelo=" + id_vuelo +
-                ", id_avion=" + id_avion +
-                ", destino='" + destino + '\'' +
-                ", fecha_salida=" + fecha_salida +
-                ", hora_salida=" + hora_salida +
-                '}';
+        return
+                "ID Vuelo: " + id_vuelo +
+                " ID Avion:" + id_avion +
+                " Destino: " + destino +
+                " Fecha de Salida: " + fecha_salida +
+                " Hora de Salida: " + hora_salida;
     }
 }

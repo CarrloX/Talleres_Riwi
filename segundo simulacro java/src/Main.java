@@ -3,6 +3,7 @@ import controller.PasajeroController;
 import controller.ReservacionController;
 import controller.VueloController;
 import entity.Avion;
+import model.PasajeroModel;
 
 import javax.swing.*;
 
@@ -57,12 +58,16 @@ public class Main {
                                 """));
                         switch (OpcionPasajeros) {
                             case 1:
+                                PasajeroController.create();
                                 break;
                             case 2:
+                                PasajeroController.read();
                                 break;
                             case 3:
+                                PasajeroController.update();
                                 break;
                             case 4:
+                                PasajeroController.delete();
                                 break;
                         }
                     } while (OpcionPasajeros !=5);
@@ -79,6 +84,7 @@ public class Main {
                                 """));
                         switch (OpcionReservaciones){
                             case 1:
+                                ReservacionController.create();
                                 break;
                             case 2:
                                 break;
@@ -101,12 +107,16 @@ public class Main {
                                 """));
                         switch (OpcionVuelos){
                             case 1:
+                                VueloController.create();
                                 break;
                             case 2:
+                                VueloController.read();
                                 break;
                             case 3:
+                                VueloController.update();
                                 break;
                             case 4:
+                                VueloController.delete();
                                 break;
                         }
                     } while (OpcionVuelos != 5);
