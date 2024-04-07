@@ -88,7 +88,7 @@ public class Main {
                                 ReservacionController.create();
                                 break;
                             case 2:
-                                ReservacionController.read();
+                                ReservacionController.getAll();
                                 break;
                             case 3:
                                 ReservacionController.update();

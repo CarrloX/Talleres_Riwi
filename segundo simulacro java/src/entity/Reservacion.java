@@ -12,11 +12,29 @@ public class Reservacion {
 
     private String asiento;
 
+    private Pasajero objPasajero;
+
+    private Vuelo objVuelo;
+
     private Pasajero pasajero;
 
     private Vuelo vuelo;
 
-    public Reservacion() {
+    public Reservacion(){
+    }
+
+    public Reservacion(int idPasajero, int idVuelo, String fechaReservacion, String asiento) {
+    }
+
+    public Reservacion(int id_pasajero, int id_vuelo, String fecha_reservacion, String asiento, Pasajero objPasajero, Vuelo objVuelo, Pasajero pasajero, Vuelo vuelo) {
+        this.id_pasajero = id_pasajero;
+        this.id_vuelo = id_vuelo;
+        this.fecha_reservacion = fecha_reservacion;
+        this.asiento = asiento;
+        this.objPasajero = objPasajero;
+        this.objVuelo = objVuelo;
+        this.pasajero = pasajero;
+        this.vuelo = vuelo;
     }
 
     public Reservacion(int id_Pasajero, Pasajero pasajero, int prueba, Vuelo vuelo, String fecha_reservacion, String asiento) {
@@ -25,6 +43,38 @@ public class Reservacion {
         this.fecha_reservacion = fecha_reservacion;
         this.asiento = asiento;
         this.pasajero = pasajero;
+        this.vuelo = vuelo;
+    }
+
+    public Pasajero getObjPasajero() {
+        return objPasajero;
+    }
+
+    public void setObjPasajero(Pasajero objPasajero) {
+        this.objPasajero = objPasajero;
+    }
+
+    public Vuelo getObjVuelo() {
+        return objVuelo;
+    }
+
+    public void setObjVuelo(Vuelo objVuelo) {
+        this.objVuelo = objVuelo;
+    }
+
+    public Pasajero getPasajero() {
+        return pasajero;
+    }
+
+    public void setPasajero(Pasajero pasajero) {
+        this.pasajero = pasajero;
+    }
+
+    public Vuelo getVuelo() {
+        return vuelo;
+    }
+
+    public void setVuelo(Vuelo vuelo) {
         this.vuelo = vuelo;
     }
 
@@ -71,11 +121,9 @@ public class Reservacion {
     @Override
     public String toString() {
         return
-                "ID de Reserva: " + id_reservacion +
-                " ID de Pasajero: " + id_pasajero +
-                " ID de Vuelo=" + id_vuelo +
-                " Fecha de reserva: " + fecha_reservacion +
-                " Asiento: " + asiento + '\'' +
-                '}';
+                "Fecha de Reservacion: " + fecha_reservacion +
+                ", Asiento: " + asiento +
+                ", Pasajero: " + objPasajero.getNombre()+
+                ", Vuelo: " + objVuelo.getDestino();
     }
 }

@@ -4,7 +4,6 @@ import entity.Pasajero;
 import entity.Reservacion;
 import entity.Vuelo;
 import model.ReservacionModel;
-import model.VueloModel;
 import utils.Utils;
 
 import javax.swing.*;
@@ -44,40 +43,65 @@ public class ReservacionController {
         instanceModel().create(new Reservacion(PasajeroSeleccion.getId_pasajero(),PasajeroSeleccion,VueloSeleccion.getId_vuelo(),VueloSeleccion,fecha_reservacion,asiento));
     }
 
-    public static void read(){
-        String list=read(instanceModel().read());
-        JOptionPane.showMessageDialog(null,list);
+    public static void getAll(){
+        String listString = getAll(instanceModel().read());
+        JOptionPane.showMessageDialog(null,listString);
     }
 
-    public static String read(List<Object> list){
+    public static String getAll(List<Object> list){
         String listString = "LISTA DE REGISTROS: \n";
 
         for (Object temp: list){
-            Reservacion objReservacion = (Reservacion) temp;
-            listString +=objReservacion.toString() + "\n";
+            Reservacion obj = (Reservacion) temp;
+            listString +=obj.toString() + "\n";
         }
         return listString;
     }
 
     public static void update(){
-        Object[] opciones = Utils.listToArray(instanceModel().read());
-
-        Reservacion objSeleccion = (Reservacion) JOptionPane.showInputDialog(
+        Object[] opcionesReservacion = Utils.listToArray(instanceModel().read());
+        Reservacion reservacionSeleccion = (Reservacion) JOptionPane.showInputDialog(
                 null,
-                "selecciona una reservacion para actualizar: ",
+                "selecciona la reservacion  para actualizar",
                 "",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
-                opciones,
-                opciones[0]
+                opcionesReservacion,
+                opcionesReservacion[0]
         );
 
-        objSeleccion.setId_pasajero(Integer.parseInt(JOptionPane.showInputDialog(null,"ingresa el nuevo pasajero:",objSeleccion.getId_pasajero())));
-        objSeleccion.setId_vuelo(Integer.parseInt(JOptionPane.showInputDialog(null,"ingresa el nuevo vuelo:",objSeleccion.getId_vuelo())));
-        objSeleccion.setFecha_reservacion(JOptionPane.showInputDialog(null,"ingresa la nueva fecha de reservacion: ",objSeleccion.getFecha_reservacion()));
-        objSeleccion.setAsiento(JOptionPane.showInputDialog(null,"ingresa el nuevo asiento",objSeleccion.getAsiento()));
+        Object[] opcionesPasajero = Utils.listToArray(PasajeroController.instanceModel().read());
 
-        instanceModel().update(objSeleccion);
+        reservacionSeleccion.setObjPasajero((Pasajero)JOptionPane.showInputDialog(
+                null,
+                "selecciona el pasajero que desea cambiar",
+                "",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesPasajero,
+                opcionesPasajero[0]
+        ));
+
+        reservacionSeleccion.setId_pasajero(reservacionSeleccion.getObjPasajero().getId_pasajero());
+
+        Object[] opcionesVuelo = Utils.listToArray(VueloController.instanceModel().read());
+
+        reservacionSeleccion.setObjVuelo((Vuelo) JOptionPane.showInputDialog(
+                null,
+                "selecciona el vuelo que desea cambiar",
+                "",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesVuelo,
+                opcionesVuelo[0]
+        ));
+
+        reservacionSeleccion.setId_vuelo(reservacionSeleccion.getObjVuelo().getId_vuelo());
+
+        reservacionSeleccion.setFecha_reservacion(JOptionPane.showInputDialog(null,"ingresa la nueva fecha de reservacion (YYYY-MM-DD)",reservacionSeleccion.getFecha_reservacion()));
+        reservacionSeleccion.setAsiento(JOptionPane.showInputDialog(null,"ingresa el nuevo asiento que desea reservar",reservacionSeleccion.getAsiento()));
+
+        instanceModel().update(reservacionSeleccion);
     }
 
     public static void delete(){

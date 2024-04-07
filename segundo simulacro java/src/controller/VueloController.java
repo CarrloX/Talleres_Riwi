@@ -1,10 +1,7 @@
 package controller;
 
-import entity.AdapterAvion;
 import entity.Avion;
-import entity.Pasajero;
 import entity.Vuelo;
-import model.AvionModel;
 import model.VueloModel;
 import utils.Utils;
 
