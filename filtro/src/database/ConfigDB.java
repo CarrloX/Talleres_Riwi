@@ -11,13 +11,13 @@ public class ConfigDB {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String url = "jdbc:mysql://127.0.0.1/simulacro";
-            String user = "root";
-            String password = "Rlwl2023.";
+            String url = "jdbc:mysql://bfen5fgy295bdgwswswb-mysql.services.clever-cloud.com/bf6lbprv5e6bstfdpqps";
+            String user = "uaqddrh2zteadmlb";
+            String password = "cGzFfNzn6uY9gkTzfcpB";
 
             objConnection = DriverManager.getConnection(url, user, password);
 
-            String dbName = "simulacro";
+            String dbName = "bfen5fgy295bdgwswswb";
             objConnection.setCatalog(dbName);
 
             System.out.println("Conexión exitosa!!");
